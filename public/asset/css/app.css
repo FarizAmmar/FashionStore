@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Menu Browser Section */
+.navbar-nav .active {
+    background: #d92b09 !important;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white !important;
+}
+
+.navbar-nav .active .bi {
+    color: white !important;
+}
+
+.navbar-nav .nav-link {
+    padding: 10px;
+    margin-bottom: 30px;
+    color: rgb(46, 46, 46);
+}
+
+.navbar-nav .nav-link:hover {
+    background: #ff5b3b;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Sidebar Section */
+.sidebar {
+    right: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    height: 100vh;
+}
+
+.nav-pills .active {
+    color: white !important;
+    background-color: #d92b09 !important;
+}
+
+.nav-pills .nav-item {
+    margin-top: 10px;
+}
+
+.nav-pills .nav-link {
+    color: rgb(22, 22, 22);
+}
+
+.nav-pills .nav-link:hover {
+    color: white;
+    background-color: #ff5b3b;
+    border-radius: 5px;
+}
+
+.btn-primer,
+.btn-primer-trans:active,
+.page-link:active {
+    background-color: #d92b09;
+    color: white;
+}
+
+.btn-primer-trans:hover {
+    background-color: #ff5b3b;
+    color: white;
+}
+
+.btn-primer:hover {
+    background-color: #ff5b3b;
+    color: white;
+}
+
+.form-check-input:checked {
+    background-color: #d92b09;
+    border-color: #d92b09;
+}
+
+.form-style {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid;
+    color: gray;
+    border-radius: 5px;
+    outline: none;
+}
+
+.table {
+    color: #d92b09;
+}
+
+.page-link,
+.nav-link {
+    color: #d92b09;
+}
+
+.page-link:hover,
+.nav-link:hover {
+    background-color: #ff5b3b;
+    color: white;
+}
+
+/* Produk Card */
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}
+
+.sb-title-items {
+    color: #d92b09;
+}
+
+.page-item.active .page-link {
+    background-color: #d92b09 !important;
+    border-color: #d92b09 !important;
+}
+
+.bg-primer {
+    background: #d92b09;
+    color: aliceblue;
+}
+
+.spinner-border {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: text-bottom;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border 0.75s linear infinite;
+    animation: spinner-border 0.75s linear infinite;
+}
