@@ -6,6 +6,7 @@ use App\Models\Order;
 use GuzzleHttp\Client;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -101,6 +102,7 @@ class HomeController extends Controller
         $validatedData = $request->validate($rules, $messages);
 
         $order = new Order(); //
+        $order->user_id = $request->input('user_id');
         $order->fname = $validatedData['fname'];
         $order->lname = $validatedData['lname'];
         $order->phone = $validatedData['phone'];
@@ -159,6 +161,10 @@ class HomeController extends Controller
     // public function show($id)
     public function show($short_name)
     {
+
+        $user = User::where('username', auth()->user()->username)
+            ->where('id', auth()->user()->id)->first();
+
         // Load products and categories with eager loading
         $products = Product::where('short_name', $short_name)->with('category')->first();
         $categories = Category::all();
@@ -167,7 +173,8 @@ class HomeController extends Controller
         return view('page.details', [
             'title' => 'Details Product',
             'product' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => $user,
         ]);
     }
 
@@ -189,7 +196,7 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         //
     }

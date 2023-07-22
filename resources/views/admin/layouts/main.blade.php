@@ -43,7 +43,6 @@
     @endif
 
 
-
 </body>
 
 {{-- JS Bootstrap Popper --}}

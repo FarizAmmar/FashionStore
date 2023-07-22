@@ -31,6 +31,12 @@
     {{-- Content Login --}}
     @yield('content')
 
+    @elseif ($title === 'My Orders')
+    {{-- Navbar --}}
+    @include('partials.nav')
+
+    @yield('content')
+
     @elseif ($title === 'Details Product')
     {{-- Navbar --}}
     @include('partials.nav')

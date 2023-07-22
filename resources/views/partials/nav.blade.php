@@ -2,7 +2,7 @@
     <div class="container-fluid">
         {{-- start Left Side OffCanvas --}}
         @if ($title != 'Home')
-        <a class="btn btn-primer" href="/" role="button" title="Click here to back home.">
+        <a class="btn btn-primer" href="/store" role="button" title="Click here to back home.">
             <i class="bi bi-caret-left-fill"></i>
         </a>
         @else
@@ -29,11 +29,39 @@
 
         {{-- Main Menu --}}
         <div class="d-flex justify-content-end align-items-center me-3">
-            <a href="#" class="btn text-dark" role="button" data-bs-toggle="dropdown">
+            <a href="#" class="btn text-dark " role="button" data-bs-toggle="dropdown">
                 <i class="bi bi-list"></i>
                 <span class="text-uppercase" style="opacity:75%;">Menu</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item btn-primer-trans disabled">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <i class='bx bx-user'></i>
+                            </div>
+                            <div class="col">
+                                {{ auth()->user()->username }}
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item btn-primer-trans"
+                        href="{{ route('myorder', ['username' => auth()->user()->username]) }}">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <i class='bx bx-cart'></i>
+                            </div>
+                            <div class="col">
+                                My Orders
+                            </div>
+                        </div>
+                    </a>
+                </li>
                 <li>
                     <a class="dropdown-item btn-primer-trans" href="/contact">
                         <div class="row">
@@ -57,6 +85,22 @@
                             </div>
                         </div>
                     </a>
+                </li>
+                <li>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        @method('POST')
+                        <button class="dropdown-item btn-primer-trans" type="submit">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <i class='bx bx-exit'></i>
+                                </div>
+                                <div class="col">
+                                    Logout
+                                </div>
+                            </div>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>

@@ -81,6 +81,7 @@
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="col-md-6">
                         <label for="fname" class="form-label">Nama Depan</label>
+                        <input type="text" name="user_id" id="user_id" value="{{ $user->id }}" hidden>
                         <input type="text" class="form-control @error('fname') is-invalid
                         @enderror" id="fname" name="fname" value="{{ old('fname') }}" maxlength="20">
                         @error('fname')

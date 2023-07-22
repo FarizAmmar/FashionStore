@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class LoginController extends Controller
      */
     public function index()
     {
-        // Login Page
-        return view('admin.pages.login', [
-            'title' => 'Login',
+        // User Login
+        return view('userlogin', [
+            'title' => 'Login'
         ]);
     }
 
@@ -100,7 +100,7 @@ class LoginController extends Controller
 
         if (Auth::Attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/store');
         }
 
         return back()->with('loginFailed', 'Please contact your administrator if you already have an account!!');

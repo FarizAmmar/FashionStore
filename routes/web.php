@@ -14,6 +14,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PotonganController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -30,17 +31,24 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // ------ NEW SCHEMA -------
 
-// Home
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Index
+Route::get('/', [UserController::class, 'index'])->name('userLogin')->middleware('guest');
+Route::post('/', [UserController::class, 'authenticate'])->name('userLogin.auth');
+
+// Store
+Route::get('/store', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 // Show By Details Product
-Route::get('/details/{product:short_name}', [HomeController::class, 'show']);
+Route::get('/details/{product:short_name}', [HomeController::class, 'show'])->middleware('auth');
 
 // Show By List Category
-Route::get('/category/{category:short_name}', [CategoryController::class, 'show'])->name('category');
+Route::get('/category/{category:short_name}', [CategoryController::class, 'show'])->name('category')->middleware('auth');
 
 // Order Product
-Route::post('/details/order', [HomeController::class, 'store']);
+Route::post('/details/order', [HomeController::class, 'store'])->middleware('auth');
+Route::get('/myorders/{username}', [OrderController::class, 'show'])->middleware('auth')->name('myorder');
+Route::put('/myorders/{id}', [OrderController::class, 'update'])->middleware('auth')->name('myorder.update');
+Route::delete('/myorders/{id}', [OrderController::class, 'destroy'])->middleware('auth')->name('myorder.delete');
 
 // Contact Page
 Route::get('/contact', [ContactController::class, 'index']);
@@ -50,38 +58,34 @@ Route::post('/contact/send', [ContactController::class, 'store'])->name('contact
 Route::get('/faq', [FAQController::class, 'index']);
 
 
-// Admin
-// Login
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+
+// Login Admin
+Route::get('/admin/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
 
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+// Admin
+Route::middleware(['admin.access'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-// Admin Product Index
-Route::get('/dashboard/product', [ProductController::class, 'index'])->name('product.index')->middleware('auth');
-Route::get('/product/new', [ProductController::class, 'create'])->name('product.create')->middleware('auth');
-Route::post('/product/stored', [ProductController::class, 'store'])->name('product.stored')->middleware('auth');
-Route::post('/product/{product:short_name}', [ProductController::class, 'edit'])->name('product.edit')->middleware('auth');
-Route::put('/product/update/{product:short_name}', [ProductController::class, 'update'])->name('product.update')->middleware('auth');
-Route::delete('/product/{product:short_name}', [ProductController::class, 'destroy'])->name('product.delete')->middleware('auth');
+    // Admin Product Index
+    Route::get('/dashboard/product', [ProductController::class, 'index'])->name('product.index')->middleware('auth');
+    Route::get('/product/new', [ProductController::class, 'create'])->name('product.create')->middleware('auth');
+    Route::post('/product/stored', [ProductController::class, 'store'])->name('product.stored')->middleware('auth');
+    Route::post('/product/{product:short_name}', [ProductController::class, 'edit'])->name('product.edit')->middleware('auth');
+    Route::put('/product/update/{product:short_name}', [ProductController::class, 'update'])->name('product.update')->middleware('auth');
+    Route::delete('/product/{product:short_name}', [ProductController::class, 'destroy'])->name('product.delete')->middleware('auth');
 
-// Admin Category
-Route::get('/dashboard/category', [CategoryController::class, 'index'])->name('category.index')->middleware('auth');
-Route::post('/category/stored', [CategoryController::class, 'store'])->name('category.stored')->middleware('auth');
-Route::put('/category/update/{category:short_name}', [CategoryController::class, 'update'])->name('category.update')->middleware('auth');
-Route::delete('/category/{category:short_name}', [CategoryController::class, 'destroy'])->name('category.delete')->middleware('auth');
+    // Admin Category
+    Route::get('/dashboard/category', [CategoryController::class, 'index'])->name('category.index')->middleware('auth');
+    Route::post('/category/stored', [CategoryController::class, 'store'])->name('category.stored')->middleware('auth');
+    Route::put('/category/update/{category:short_name}', [CategoryController::class, 'update'])->name('category.update')->middleware('auth');
+    Route::delete('/category/{category:short_name}', [CategoryController::class, 'destroy'])->name('category.delete')->middleware('auth');
 
-// Admin Order
-Route::get('/dashboard/order', [OrderController::class, 'index'])->name('order.index')->middleware('auth');
-
-
-
-
-
-
-
+    // Admin Order
+    Route::get('/dashboard/order', [OrderController::class, 'index'])->name('order.index')->middleware('auth');
+});
 
 
 // // Login or Logout
